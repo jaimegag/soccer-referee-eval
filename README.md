@@ -1,7 +1,7 @@
 # Soccer referee eval: Opus 5.5 vs Fable 5.2
 
 A small Python harness that asks two Claude models to rule on soccer situations under the
-IFAB Laws of the Game 2026/27, scores their answers automatically, and compares quality, cost
+[IFAB Laws of the Game 2026/27](https://downloads.theifab.com/downloads/laws-of-the-game-202627-double-pages?l=en), scores their answers automatically, and compares quality, cost
 and speed.
 
 **Results and charts: [RESULTS.md](RESULTS.md)**
@@ -9,7 +9,11 @@ and speed.
 ## How it works
 
 - `cases.jsonl`: 26 referee situations, each with an answer key (decision, team awarded the
-  restart, card). Tiers: easy, medium, tricky, and rules new in 2026/27.
+  restart, card). Tiers: easy, medium, tricky, and rules new in 2026/27. Each case names the
+  Law it tests (`law_ref`), and the answer keys are based on the
+  [Laws of the Game 2026/27](https://downloads.theifab.com/downloads/laws-of-the-game-202627-double-pages?l=en).
+  The new-rule cases come from IFAB's
+  [Changes to the Laws of the Game 2026/27](https://downloads.theifab.com/downloads/changes-to-the-laws-of-the-game-202627?l=en).
 - `run_eval.py`: sends every case to each model with structured JSON output, scores the three
   fields, and writes one row per call to `results/<timestamp>.jsonl` (answer, explanation,
   tokens, cost, latency).
