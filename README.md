@@ -18,7 +18,7 @@ and speed.
 
 ## How `run_eval.py` uses the Claude API
 
-Each case is one call to the Messages API, made with the official Python SDK (`anthropic`):
+Each case is one call to the Messages API, made with the official [Python SDK](https://github.com/anthropics/anthropic-sdk-python) (`anthropic`):
 
 ```python
 client = anthropic.Anthropic()             # reads ANTHROPIC_API_KEY from the environment
@@ -36,12 +36,12 @@ resp = client.messages.create(
 
 What matters about these calls:
 
-- **Structured output makes scoring exact.** `output_config.format` constrains the reply to a
+- **[Structured output](https://platform.claude.com/docs/en/build-with-claude/structured-outputs) makes scoring exact.** `output_config.format` constrains the reply to a
   JSON schema: `decision`, `awarded_to` and `sanction` must be values from fixed lists (for
   example `penalty_kick`, `red`, `yellow`), plus a free-text `explanation`. The script
   compares the three fields to the answer key with `==`, with no text parsing and no model
   acting as judge.
-- **Effort controls how much the model thinks.** With `--models claude-opus-5-5:high` the
+- **[Effort](https://platform.claude.com/docs/en/build-with-claude/effort) controls how much the model thinks.** With `--models claude-opus-5-5:high` the
   request sends `effort: "high"`. Without an effort it sends nothing, so the model uses its own
   default (see the table below). Both models always think before answering. Thinking text isn't
   returned, but it is billed as output tokens.
